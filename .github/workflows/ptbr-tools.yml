@@ -5,10 +5,12 @@ on:
     branches: [ptbr-adventure]
     paths:
       - "tools/forge_ptbr/**"
+      - "translations/**"
       - ".github/workflows/ptbr-tools.yml"
   pull_request:
     paths:
       - "tools/forge_ptbr/**"
+      - "translations/**"
       - ".github/workflows/ptbr-tools.yml"
 
 jobs:
@@ -29,3 +31,14 @@ jobs:
         run: python -m pytest tools/forge_ptbr/tests -q
       - name: Smoke scan repository
         run: forge-ptbr scan --repo . --output tools/forge_ptbr/build/inventory.json
+      - name: Smoke sync translation catalogs
+        run: forge-ptbr catalog-sync --repo . --catalogs-dir tools/forge_ptbr/build/catalogs-ci
+      - name: Verify Adventure resources remain untouched
+        run: git diff --exit-code -- forge-gui/res/adventure
+      - name: Upload generated catalog fixture
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ptbr-catalogs-linux
+          path: tools/forge_ptbr/build/catalogs-ci/
+          if-no-files-found: error

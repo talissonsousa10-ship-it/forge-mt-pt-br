@@ -18,3 +18,8 @@ def test_validation_reports_missing_or_added_tokens() -> None:
     candidate = "Derrote o inimigo e ganhe {0}."
     errors = validate_token_equivalence(source, candidate)
     assert errors == ["missing token: $(enemy_1)"]
+
+
+def test_extract_tokens_preserves_decoded_newline_from_json() -> None:
+    text = "First line\nSecond line"
+    assert extract_tokens(text) == ("\n",)

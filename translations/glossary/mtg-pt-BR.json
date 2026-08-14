@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "terms": [
+    {"source": "Artifact", "target": "artefato", "case_sensitive": false, "whole_word": true},
+    {"source": "Battlefield", "target": "campo de batalha", "case_sensitive": false, "whole_word": true},
+    {"source": "Counter", "target": "marcador", "case_sensitive": false, "whole_word": true},
+    {"source": "Creature", "target": "criatura", "case_sensitive": false, "whole_word": true},
+    {"source": "Deathtouch", "target": "Toque mortífero", "case_sensitive": false, "whole_word": true},
+    {"source": "Flying", "target": "Voar", "case_sensitive": false, "whole_word": true},
+    {"source": "Graveyard", "target": "cemitério", "case_sensitive": false, "whole_word": true},
+    {"source": "Haste", "target": "Ímpeto", "case_sensitive": false, "whole_word": true},
+    {"source": "Library", "target": "grimório", "case_sensitive": false, "whole_word": true, "contexts": ["rules", "magic"]},
+    {"source": "Lifelink", "target": "Vínculo com a vida", "case_sensitive": false, "whole_word": true},
+    {"source": "Mana", "target": "mana", "case_sensitive": false, "whole_word": true},
+    {"source": "Planeswalker", "target": "Planeswalker", "case_sensitive": false, "whole_word": true},
+    {"source": "Token", "target": "ficha", "case_sensitive": false, "whole_word": true},
+    {"source": "Trample", "target": "Atropelar", "case_sensitive": false, "whole_word": true}
+  ]
+}

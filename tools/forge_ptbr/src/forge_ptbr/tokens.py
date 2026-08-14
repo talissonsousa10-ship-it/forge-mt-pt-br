@@ -3,7 +3,13 @@ from dataclasses import dataclass
 import re
 
 
-TOKEN_RE = re.compile(r"\$\([A-Za-z0-9_]+\)|\{\d+\}|%(?:s|d)|\\n|\r?\n")
+TOKEN_RE = re.compile(
+    r"\$\([A-Za-z0-9_]+\)"
+    r"|\{(?:\d+|[A-Za-z_][A-Za-z0-9_]*)\}"
+    r"|%(?:\d+\$)?(?:s|d)"
+    r"|\\n"
+    r"|\r?\n"
+)
 
 
 @dataclass(frozen=True, slots=True)

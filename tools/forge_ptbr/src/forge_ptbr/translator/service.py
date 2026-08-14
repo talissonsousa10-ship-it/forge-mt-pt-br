@@ -14,7 +14,6 @@ _TRANSLATABLE_STATUSES = {
     TranslationStatus.NEW,
     TranslationStatus.CHANGED,
     TranslationStatus.REVIEW,
-    TranslationStatus.AUTO,
 }
 
 

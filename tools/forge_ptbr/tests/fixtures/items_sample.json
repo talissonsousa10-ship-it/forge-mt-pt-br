@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Sir Donovan's Amulet",
+    "description": "A talisman for remotely contacting your employer",
+    "iconName": "SirDonovansAmulet",
+    "dialogOnUse": {
+      "text": "The amulet lies inert.",
+      "options": [
+        {
+          "condition": [{"checkQuestFlag": "Quest_ShardMines_Epilogue"}],
+          "name": "Contact Sir Donovan"
+        }
+      ]
+    }
+  }
+]

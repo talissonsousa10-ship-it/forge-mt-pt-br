@@ -2,14 +2,23 @@ from forge_ptbr.tokens import extract_tokens, mask_tokens, restore_tokens, valid
 
 
 def test_extracts_adventure_and_format_tokens_in_order() -> None:
-    text = "Defeat $(enemy_1), meet $(playername), gain {0} gold, then show %s.\\nDone."
-    assert extract_tokens(text) == ("$(enemy_1)", "$(playername)", "{0}", "%s", "\\n")
+    text = "Defeat $(enemy_1), meet $(playername), gain {0} gold for {playerName}, then show %1$s and %d.\\nDone."
+    assert extract_tokens(text) == (
+        "$(enemy_1)",
+        "$(playername)",
+        "{0}",
+        "{playerName}",
+        "%1$s",
+        "%d",
+        "\\n",
+    )
 
 
 def test_mask_and_restore_round_trip() -> None:
-    source = "Return to $(poi_2) with {0} shards."
+    source = "Return to $(poi_2) with {0} shards for {playerName}."
     masked = mask_tokens(source)
     assert "$(poi_2)" not in masked.text
+    assert "{playerName}" not in masked.text
     assert restore_tokens(masked.text, masked.tokens) == source
 
 

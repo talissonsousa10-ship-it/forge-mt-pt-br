@@ -40,9 +40,8 @@ jobs:
       - name: Verify Adventure resources remain untouched
         run: git diff --exit-code -- forge-gui/res/adventure
       - name: Upload generated catalog fixture
-        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: ptbr-catalogs-linux
+          name: ptbr-catalogs-${{ runner.os }}
           path: tools/forge_ptbr/build/catalogs-ci/
           if-no-files-found: error

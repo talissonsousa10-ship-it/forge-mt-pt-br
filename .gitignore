@@ -98,6 +98,12 @@ forge-gui/tools/PerSetTrackingResults
 __pycache__
 *.pyc
 
+# Forge PT-BR tooling generated output
+tools/forge_ptbr/build/
+tools/forge_ptbr/.pytest_cache/
+tools/forge_ptbr/*.egg-info/
+tools/forge_ptbr/src/*.egg-info/
+
 # Ignore Claude configuration
 .claude
 # EDHREC commander matrix tool intermediates

@@ -13,3 +13,14 @@ def test_loads_forge_json_recovers_missing_member_comma_without_changing_input()
 
     assert parsed == {"type": "Table", "height": 413, "fontColor": "black"}
     assert source == original
+
+
+def test_loads_forge_json_recovers_missing_comma_between_array_objects() -> None:
+    source = '''[
+      {"name": "quests"}
+      {"name": "toggleAward"}
+    ]'''
+
+    parsed = loads_forge_json(source)
+
+    assert parsed == [{"name": "quests"}, {"name": "toggleAward"}]

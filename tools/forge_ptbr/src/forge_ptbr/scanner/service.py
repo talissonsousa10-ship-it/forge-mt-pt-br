@@ -29,7 +29,12 @@ def scan_adventure(repo_root: Path) -> ScanReport:
             )
             continue
 
-        document = json.loads(resource.path.read_text(encoding="utf-8"))
+        try:
+            document = json.loads(resource.path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            resource_name = f"{resource.plane}/{resource.relative_file.as_posix()}"
+            raise ValueError(f"{resource_name}: {exc}") from exc
+
         for field in walk_json_strings(document):
             if not field.value:
                 continue

@@ -16,14 +16,20 @@ def _insert_missing_member_commas(text: str) -> str:
         if not stripped:
             continue
 
-        if _MEMBER_RE.match(line) and previous_significant is not None:
+        if previous_significant is not None:
             previous = lines[previous_significant].rstrip()
             previous_stripped = previous.strip()
-            if (
-                previous_stripped
+            missing_member_comma = bool(_MEMBER_RE.match(line)) and (
+                bool(previous_stripped)
                 and not previous_stripped.endswith((",", "{", "[", ":"))
                 and not previous_stripped.startswith(("//", "/*", "*"))
-            ):
+            )
+            missing_array_object_comma = (
+                stripped.startswith(("{", "["))
+                and previous_stripped.endswith(("}", "]"))
+                and not previous_stripped.endswith(("},", "],"))
+            )
+            if missing_member_comma or missing_array_object_comma:
                 lines[previous_significant] = previous + ","
 
         previous_significant = index

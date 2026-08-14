@@ -1,0 +1,31 @@
+name: PT-BR Tools
+
+on:
+  push:
+    branches: [ptbr-adventure]
+    paths:
+      - "tools/forge_ptbr/**"
+      - ".github/workflows/ptbr-tools.yml"
+  pull_request:
+    paths:
+      - "tools/forge_ptbr/**"
+      - ".github/workflows/ptbr-tools.yml"
+
+jobs:
+  scanner:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install PT-BR tooling
+        run: python -m pip install -e "tools/forge_ptbr[dev]"
+      - name: Run tests
+        run: python -m pytest tools/forge_ptbr/tests -q
+      - name: Smoke scan repository
+        run: forge-ptbr scan --repo . --output tools/forge_ptbr/build/inventory.json

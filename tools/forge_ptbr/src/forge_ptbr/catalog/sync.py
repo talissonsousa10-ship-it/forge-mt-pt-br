@@ -24,15 +24,19 @@ class SyncSummary:
     total: int = 0
 
 
+def _key_for(source: InventoryEntry) -> str:
+    return make_localization_key(
+        source.source_id,
+        source.location.plane,
+        source.location.resource_type,
+        source.field_name,
+    )
+
+
 def _from_inventory(source: InventoryEntry) -> CatalogEntry:
     return CatalogEntry(
         source_id=source.source_id,
-        localization_key=make_localization_key(
-            source.source_id,
-            source.location.plane,
-            source.location.resource_type,
-            source.field_name,
-        ),
+        localization_key=_key_for(source),
         plane=source.location.plane,
         resource_type=source.location.resource_type,
         relative_file=source.location.relative_file.as_posix(),
@@ -44,15 +48,19 @@ def _from_inventory(source: InventoryEntry) -> CatalogEntry:
     )
 
 
-def _refresh_changed(existing: CatalogEntry, source: InventoryEntry) -> None:
+def _refresh_metadata(existing: CatalogEntry, source: InventoryEntry) -> None:
+    existing.localization_key = _key_for(source)
     existing.plane = source.location.plane
     existing.resource_type = source.location.resource_type
     existing.relative_file = source.location.relative_file.as_posix()
     existing.json_path = source.location.json_path
     existing.field_name = source.field_name
+    existing.tokens = source.tokens
+
+
+def _refresh_changed(existing: CatalogEntry, source: InventoryEntry) -> None:
     existing.source_text = source.source_text
     existing.source_hash = source.source_hash
-    existing.tokens = source.tokens
     existing.status = TranslationStatus.CHANGED
     existing.reviewed = False
     existing.quality_score = None
@@ -64,6 +72,19 @@ def _mark_obsolete(entry: CatalogEntry, *, safety_flag: bool) -> None:
     entry.reviewed = False
     if safety_flag and "source_not_localizable" not in entry.quality_flags:
         entry.quality_flags = (*entry.quality_flags, "source_not_localizable")
+
+
+def _validate_unique_localization_keys(catalogs: dict[str, list[CatalogEntry]]) -> None:
+    seen: dict[str, str] = {}
+    for entries in catalogs.values():
+        for entry in entries:
+            previous_source_id = seen.get(entry.localization_key)
+            if previous_source_id is not None and previous_source_id != entry.source_id:
+                raise ValueError(
+                    "Duplicate localization key: "
+                    f"{entry.localization_key} ({previous_source_id}, {entry.source_id})"
+                )
+            seen[entry.localization_key] = entry.source_id
 
 
 def sync_catalogs(report: ScanReport, catalogs_dir: Path) -> SyncSummary:
@@ -92,7 +113,9 @@ def sync_catalogs(report: ScanReport, catalogs_dir: Path) -> SyncSummary:
             existing_by_id[source.source_id] = created
             continue
 
-        if existing.source_hash != source.source_hash:
+        source_changed = existing.source_hash != source.source_hash
+        _refresh_metadata(existing, source)
+        if source_changed:
             _refresh_changed(existing, source)
 
     for source_id, existing in existing_by_id.items():
@@ -100,6 +123,8 @@ def sync_catalogs(report: ScanReport, catalogs_dir: Path) -> SyncSummary:
             _mark_obsolete(existing, safety_flag=False)
         elif source_id in nonlocalizable_ids:
             _mark_obsolete(existing, safety_flag=True)
+
+    _validate_unique_localization_keys(catalogs)
 
     for plane, entries in catalogs.items():
         write_catalog(catalog_path(catalogs_dir, plane), plane, entries)

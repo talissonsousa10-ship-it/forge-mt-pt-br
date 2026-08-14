@@ -29,7 +29,7 @@ jobs:
       - name: Commit generated catalogs when changed
         shell: bash
         run: |
-          if git diff --quiet -- translations/catalogs; then
+          if [ -z "$(git status --porcelain -- translations/catalogs)" ]; then
             echo "Catalogs already synchronized."
             exit 0
           fi

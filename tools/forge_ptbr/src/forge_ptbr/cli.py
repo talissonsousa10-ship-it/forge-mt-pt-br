@@ -35,7 +35,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.strict and report.unknown_entries:
                 return 2
             return 0
-        except (FileNotFoundError, json.JSONDecodeError, OSError) as exc:
+        except (FileNotFoundError, json.JSONDecodeError, OSError, ValueError) as exc:
             print(f"forge-ptbr scan failed: {exc}", file=sys.stderr)
             return 1
 

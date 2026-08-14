@@ -12,6 +12,7 @@ from forge_ptbr.model import (
 )
 from forge_ptbr.paths import adventure_root
 from forge_ptbr.scanner.discovery import discover_resources
+from forge_ptbr.scanner.forge_json import loads_forge_json
 from forge_ptbr.scanner.json_walk import walk_json_strings
 from forge_ptbr.scanner.rules import classify_json_field
 from forge_ptbr.tokens import extract_tokens
@@ -30,7 +31,7 @@ def scan_adventure(repo_root: Path) -> ScanReport:
             continue
 
         try:
-            document = json.loads(resource.path.read_text(encoding="utf-8"))
+            document = loads_forge_json(resource.path.read_text(encoding="utf-8"))
         except json.JSONDecodeError as exc:
             resource_name = f"{resource.plane}/{resource.relative_file.as_posix()}"
             raise ValueError(f"{resource_name}: {exc}") from exc

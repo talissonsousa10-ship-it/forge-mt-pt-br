@@ -5753,7 +5753,8 @@
       "source_text": "The note says \"{COLOR=red}Wanted: 3 $(enemy_1)s. Dead. Contact town shaman for reward.{ENDCOLOR}\"",
       "source_hash": "3d04e03d7f8ded2ce1573fd8783786cac598ee3810914c195217c3f86ae738c2",
       "tokens": [
-        "$(enemy_1)"
+        "$(enemy_1)",
+        "{ENDCOLOR}"
       ],
       "translation": "",
       "status": "new",
@@ -8109,7 +8110,9 @@
       "field_name": "text",
       "source_text": "'{COLOR=red}KILL!{ENDCOLOR}.'       'REWARD.'",
       "source_hash": "ebddccada122b0f82b725922fbb32d46fb33ed2492e2d72b1ef55719ab1718e4",
-      "tokens": [],
+      "tokens": [
+        "{ENDCOLOR}"
+      ],
       "translation": "",
       "status": "new",
       "quality_score": null,
@@ -20081,7 +20084,9 @@
       "field_name": "text",
       "source_text": "The thoughts urgently follow you for a moment. '{COLOR=red}KKKKiiiiill...{ENDCOLOR}' But as you take another step back, the words vanish from your mind.",
       "source_hash": "06ac1facec9c5474eb5a23ec8f9ec171e4dab6c2964f33d42d74f0de8f81540b",
-      "tokens": [],
+      "tokens": [
+        "{ENDCOLOR}"
+      ],
       "translation": "",
       "status": "new",
       "quality_score": null,
@@ -33155,7 +33160,9 @@
       "field_name": "text",
       "source_text": "\"{COLOR=red}Have fangs, will travel{ENDCOLOR}\".",
       "source_hash": "91f898625dcfcfc24d7149f951865f5d5e511401ad0f0685e8f02e13323c4f89",
-      "tokens": [],
+      "tokens": [
+        "{ENDCOLOR}"
+      ],
       "translation": "",
       "status": "new",
       "quality_score": null,
@@ -33863,7 +33870,9 @@
       "field_name": "text",
       "source_text": "As you look at the wordless paper, words find their way into your mind by unknown means. 'FIND.' '{COLOR=red}KILL!{ENDCOLOR}' 'REWARD.'",
       "source_hash": "8950b5a70eb67f1fe83dbd2c0de8ebdcb1a26ca5df3470ec4187a9aa65c3f388",
-      "tokens": [],
+      "tokens": [
+        "{ENDCOLOR}"
+      ],
       "translation": "",
       "status": "new",
       "quality_score": null,

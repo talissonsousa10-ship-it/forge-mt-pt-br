@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "isTemplate": true,
+    "name": "Go Forth and Slay",
+    "description": "Defeat two $(enemy_1)s.",
+    "offerDialog": {
+      "text": "Hello $(playername)",
+      "options": [
+        {
+          "name": "Accept Quest",
+          "action": [
+            {
+              "setQuestFlag": {"key": "Quest_Test"},
+              "issueQuest": "1"
+            }
+          ]
+        }
+      ]
+    },
+    "rewardDescription": "Gold",
+    "stages": [
+      {
+        "id": 1,
+        "name": "Defeat $(enemy_1)",
+        "description": "Defeat it twice.",
+        "objective": "Defeat",
+        "enemyTags": ["BiomeColorless"]
+      }
+    ]
+  }
+]

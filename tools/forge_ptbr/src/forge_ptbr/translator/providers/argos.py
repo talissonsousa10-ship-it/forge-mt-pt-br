@@ -27,8 +27,10 @@ class ArgosProvider:
     def _load(self):
         if self._package_module is not None and self._translate_module is not None:
             return self._package_module, self._translate_module
-        os.environ.setdefault("ARGOS_MODEL_PROVIDER", "OPENNMT")
-        os.environ.setdefault("ARGOS_CHUNK_TYPE", "MINISBD")
+        # This provider is deliberately offline-first. Force Argos away from
+        # network-backed/model-server and Stanza paths before importing it.
+        os.environ["ARGOS_MODEL_PROVIDER"] = "OPENNMT"
+        os.environ["ARGOS_CHUNK_TYPE"] = "MINISBD"
         try:
             package_module = importlib.import_module("argostranslate.package")
             translate_module = importlib.import_module("argostranslate.translate")

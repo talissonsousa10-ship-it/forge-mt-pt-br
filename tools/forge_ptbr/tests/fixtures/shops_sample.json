@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Black1",
+    "description": "Certain Death",
+    "spriteAtlas": "maps/tileset/buildings.atlas",
+    "sprite": "RotatingShop",
+    "rewards": [
+      {"count": 6, "cardText": "(destroy|exile) target|sacrifice"},
+      {"type": "card", "cardName": "Black Lotus", "editions": ["LEA"]}
+    ]
+  }
+]
